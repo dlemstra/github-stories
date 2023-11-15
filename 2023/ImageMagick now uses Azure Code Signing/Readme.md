@@ -4,19 +4,19 @@ On the 28th of October of this year the ImageMagick code signing certificate exp
 
 ### Create Code Signing Account
 
-The creation of a code signing certificate is done in multiple steps and the first steps is to create a Code Signing Account:
+The creation of a code signing certificate is done in multiple steps and the first step is to create a Code Signing Account:
 
 ![Code Signing Account](images/CodeSigningAccount.png)
 
-This Code Signing Account account is used to request and store the code signing certificate. A code signing certificate contains information about the company that wants to sign binaries (e.g. .exe/.dll/.nuget). The information of this company needs to be validated by the organization that is providing the certificate.
+This Code Signing Account is used to request and store the code signing certificate. A code signing certificate contains information about the company that wants to sign binaries (e.g. .exe/.dll/.nuget). The information of this company needs to be validated by the organization that is providing the certificate.
 
 ### Identity Validation
 
-The identify validation is done by entering the information of the company. The example below is for company that is based in the United States. ImageMagick Studio LLC was founded in the United States but other countries are also supported and will require different information depending on the country.
+The identity validation is done by entering the information of the company. The example below is for a company that is based in the United States. ImageMagick Studio LLC was founded in the United States but other countries are also supported and will require different information depending on the country.
 
 ![Identity validation](images/IdentityValidation.png)
 
-Once the request has been submitted an email will be send to the "Primary Email" that was entered in the form to approve this. When this is approved an automated process will check the information that was entered and within minutes the identify validation will be completed. This is a big difference with the process that is normally done by companies that provide code signing certificates. But of course there are still edge cases where a manual review needs to be done. And in our case a manual review had to be done. In that edge case the process will be completed within several days and that is probably still faster than when it was requested through another company.
+Once the request has been submitted an email will be sent to the "Primary Email" that was entered in the form to approve this. When this is approved an automated process will check the information that was entered and within minutes the identity validation will be completed. This is a big difference with the process that is normally done by companies that provide code signing certificates. But of course there are still edge cases where a manual review needs to be done. And in our case a manual review had to be done. In that edge case the process will be completed within several days and that is probably still faster than when it was requested through another company.
 
 ### Create certificate profile
 
@@ -66,13 +66,13 @@ With everything setup we now have everything in place to sign our libraries and 
     timeout: 600 # We had to increment this because we sign a lot of files at the same time
 ```
 
-After adding this to the GitHub actions workflow the secrets need to be added to GitHub. The `AZURE_TENANT_ID` variable should be set to the "Tenant ID", `AZURE_CLIENT_ID` to the `Application (client) ID` of the app registration and `AZURE_CLIENT_SECRET` to the value of the secret that was added to the app registration. When we created our Code Signing Account (`code-signing-account-name`) and Certificate Profile (`certificate-profile-name`) we used `ImageMagick` as the name for both. The value for `endpoint` depends on the region that was used when creating the Code Signing Account and this is shown it's overview page. This action results in the following signature:
+After adding this to the GitHub actions workflow the secrets need to be added to GitHub. The `AZURE_TENANT_ID` variable should be set to the "Tenant ID", `AZURE_CLIENT_ID` to the `Application (client) ID` of the app registration and `AZURE_CLIENT_SECRET` to the value of the secret that was added to the app registration. When we created our Code Signing Account (`code-signing-account-name`) and Certificate Profile (`certificate-profile-name`) we used `ImageMagick` as the name for both. The value for `endpoint` depends on the region that was used when creating the Code Signing Account and this is shown on its overview page. This action results in the following signature:
 
 ![Signed binary](images/Magick.png)
 
 ### How is the file signed?
 
-Before we switched to Azure Code Signing our certificate (and it's private key) was stored in a GitHub actions secret. With Azure Code Signing we no longer have access to the private key of the certificate so the signing needs to be done inside the Code Signing Account. But instead of sending the whole executable to the Code Signing Account only a calculated hash is send to the api and a signature is returned. Because of this there is no delay when signing the executables due to an upload and this also means that the Azure Code Signing service never has access to the executable or library.
+Before we switched to Azure Code Signing our certificate (and its private key) was stored in a GitHub actions secret. With Azure Code Signing we no longer have access to the private key of the certificate so the signing needs to be done inside the Code Signing Account. But instead of sending the whole executable to the Code Signing Account only a calculated hash is send to the api and a signature is returned. Because of this there is no delay when signing the executables due to an upload and this also means that the Azure Code Signing service never has access to the executable or library.
 
 ## When can I use this?
 
