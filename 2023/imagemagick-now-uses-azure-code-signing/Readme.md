@@ -77,3 +77,5 @@ Before we switched to Azure Code Signing our certificate (and its private key) w
 ## When can I use this?
 
 Adding this to our GitHub actions workflow and signing our executables only took a couple steps so we think that more people would want to use this. This feature is now in preview so you cannot use this right now but you can reach out to the team at [AzureCodeSigningTAP@microsoft.com](mailto:AzureCodeSigningTAP@microsoft.com) and request them to become part of the preview. Pricing is not known at this moment in time but we asked to make this affordable for an open source project.
+
+</[@dlemstra](https://github.com/dlemstra)>
