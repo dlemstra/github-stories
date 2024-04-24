@@ -48,6 +48,7 @@ After the app registration has been created it needs to be assigned to the role 
 
 With everything setup we now have everything in place to sign our libraries and executables. This only requires adding one step the to GitHub actions workflow:
 
+{% raw %}
 ```yaml
 - name: Sign binaries
   uses: azure/azure-code-signing-action@v0.2.21 # Update this to the most recent version
@@ -65,6 +66,7 @@ With everything setup we now have everything in place to sign our libraries and 
     timestamp-digest: SHA256
     timeout: 600 # We had to increment this because we sign a lot of files at the same time
 ```
+{% endraw %}
 
 After adding this to the GitHub actions workflow the secrets need to be added to GitHub. The `AZURE_TENANT_ID` variable should be set to the "Tenant ID", `AZURE_CLIENT_ID` to the `Application (client) ID` of the app registration and `AZURE_CLIENT_SECRET` to the value of the secret that was added to the app registration. When we created our Code Signing Account (`code-signing-account-name`) and Certificate Profile (`certificate-profile-name`) we used `ImageMagick` as the name for both. The value for `endpoint` depends on the region that was used when creating the Code Signing Account and this is shown on its overview page. This action results in the following signature:
 
