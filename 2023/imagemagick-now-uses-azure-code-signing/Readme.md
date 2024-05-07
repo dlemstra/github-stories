@@ -51,7 +51,8 @@ With everything setup we now have everything in place to sign our libraries and 
 {% raw %}
 ```yaml
 - name: Sign binaries
-  uses: azure/azure-code-signing-action@v0.2.21 # Update this to the most recent version
+  #uses: azure/azure-code-signing-action@v0.2.21 (this was the old name of the action)
+  uses: azure/trusted-signing-action@v0.3.15 # Update this to the most recent version
   with:
     azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
     azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
