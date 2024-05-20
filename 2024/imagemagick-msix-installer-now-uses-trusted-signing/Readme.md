@@ -57,7 +57,7 @@ The company behind Advanced Installer has also created a GitHub action that can 
     # This is required for the federated credential to work
     permissions:
       id-token: write
-      contents: read
+      contents: read # This is required for a check out of the repository
 
     steps:
 
