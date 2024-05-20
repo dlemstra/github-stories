@@ -48,23 +48,41 @@ The company behind Advanced Installer has also created a GitHub action that can 
 
 {% raw %}
 ```yaml
-- name: Create msixbundle with Advanced Installer
-  if: github.event_name != 'pull_request'
-  env:
-    AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-    AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-    AZURE_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  uses: caphyon/advinst-github-action@v1.1
-  with:
-    advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
-    aip-path: ImageMagick-Windows\Installer\Msix\ImageMagick.Q16-HDRI.aip
-    aip-build-name: Build_MSIX
-    aip-commands: |
-        SetVersion ${{ needs.version.outputs.version }}
+
+- jobs:
+  - windows:
+    name: 'Windows'
+    runs-on: windows-latest
+
+    # This is required for the federated credential to work
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+
+    # Build our binaries...
+
+    - name: 'Azure CLI login with federated credential'
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Create msixbundle with Advanced Installer
+      if: github.event_name != 'pull_request'
+      uses: caphyon/advinst-github-action@v2.0
+      with:
+        advinst-license: ${{ secrets.ADVINST_LICENSE_KEY }}
+        aip-path: ImageMagick-Windows\Installer\Msix\ImageMagick.Q16-HDRI.aip
+        aip-build-name: Build_MSIX
+        aip-commands: |
+            SetVersion ${{ needs.version.outputs.version }}
 ```
 {% endraw %}
 
-This action will build the installer and sign it with the certificate that is configured in the Advanced Installer project file. The installer will then be uploaded to the GitHub release page of ImageMagick. The advantage of this setup is that we only need to configure the Advanced Installer action and don't need a separate action to sign the installer and the `.dll` and `.exe` files that are included in the installer. At the time of writing there doesn't seem to be support for federated credentials with the Advanced Installer action so we need to provide an `AZURE_CLIENT_SECRET` for authentication. When support is added for this a new story will be created to explain how we changed this.
+This action will build the installer and sign it with the certificate that is configured in the Advanced Installer project file. The installer will then be uploaded to the GitHub release page of ImageMagick. The advantage of this setup is that we only need to configure the Advanced Installer action and don't need a separate action to sign the installer and the `.dll` and `.exe` files that are included in the installer. In the example above we are using federated credentials and you can find more information on how to set this up in my previous post: [ImageMagick now uses Azure Code Signing](https://dlemstra.github.io/github-stories/2023/imagemagick-now-uses-azure-code-signing/).
 
 ### Where can I download the MSIX installer?
 
