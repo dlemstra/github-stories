@@ -44,32 +44,59 @@ After the app registration has been created it needs to be assigned to the role 
 
 ![App authorization](images/AppAuthorization.png)
 
+The GitHub action can be executed using a client id and secret but a better approach is using a federated credential. The federated credential can be created in the "Certificates & secrets" page of the app registration:
+
+![FederatedCredentials](images/FederatedCredentials.png)
+
+For our GitHub project we set it up with the following options:
+
+![Add federated credential](images/AddFederatedCredential.png)
+
 ### Setup action
 
 With everything setup we now have everything in place to sign our libraries and executables. This only requires adding one step the to GitHub actions workflow:
 
 {% raw %}
 ```yaml
-- name: Sign binaries
-  #uses: azure/azure-code-signing-action@v0.2.21 (this was the old name of the action)
-  uses: azure/trusted-signing-action@v0.3.15 # Update this to the most recent version
-  with:
-    azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-    azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
-    azure-client-secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-    endpoint: https://eus.codesigning.azure.net/
-    code-signing-account-name: ImageMagick
-    certificate-profile-name: ImageMagick
-    files-folder: 'ImageMagick-Windows\VisualMagick\bin'
-    files-folder-filter: dll,exe
-    file-digest: SHA256
-    timestamp-rfc3161: http://timestamp.acs.microsoft.com
-    timestamp-digest: SHA256
-    timeout: 600 # We had to increment this because we sign a lot of files at the same time
+- jobs:
+  - windows:
+    name: 'Windows'
+    runs-on: windows-2022
+
+    # This is required for the federated credential to work
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+
+    # Build our binaries...
+
+    - name: 'Azure CLI login with federated credential'
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Sign binaries
+      uses: azure/trusted-signing-action@v0.3.18 # Update this to the most recent version
+      with:
+        endpoint: https://eus.codesigning.azure.net/
+        trusted-signing-account-name: ImageMagick
+        certificate-profile-name: ImageMagick
+        files-folder: 'ImageMagick-Windows\VisualMagick\bin'
+        files-folder-filter: dll,exe
+        timeout: 600 # We had to increment this because we sign a lot of files at the same time
 ```
 {% endraw %}
 
-After adding this to the GitHub actions workflow the secrets need to be added to GitHub. The `AZURE_TENANT_ID` variable should be set to the "Tenant ID", `AZURE_CLIENT_ID` to the `Application (client) ID` of the app registration and `AZURE_CLIENT_SECRET` to the value of the secret that was added to the app registration. When we created our Code Signing Account (`code-signing-account-name`) and Certificate Profile (`certificate-profile-name`) we used `ImageMagick` as the name for both. The value for `endpoint` depends on the region that was used when creating the Code Signing Account and this is shown on its overview page. This action results in the following signature:
+This requires the following secrets to be added to the GitHub repository:
+- `AZURE_TENANT_ID` - The id of the tenant that contains the app registration.
+- `AZURE_CLIENT_ID` - The client id of the app registration.
+- `AZURE_SUBSCRIPTION_ID` - The id of the subscription that contains the app registration.
+
+When we created our Code Signing Account (`trusted-signing-account-name`) and Certificate Profile (`certificate-profile-name`) we used `ImageMagick` as the name for both. The value for `endpoint` depends on the region that was used when creating the Code Signing Account and this is shown on its overview page. This action results in the following signature:
 
 ![Signed binary](images/Magick.png)
 
