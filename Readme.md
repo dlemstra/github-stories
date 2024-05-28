@@ -3,3 +3,4 @@
 
 2024:
 - [ImageMagick MSIX installer now uses Trusted Signing](2024/imagemagick-msix-installer-now-uses-trusted-signing)
+- [ImageMagick latest release automatically published to the winget repository](2024/imagemagick-latest-release-automatically-published-to-the-winget-repository)
