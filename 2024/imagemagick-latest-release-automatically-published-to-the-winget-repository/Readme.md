@@ -38,6 +38,7 @@ We then created the following pull request to add the manifest to the Windows Pa
 
 After this pull request was merged we can now update the manifest automatically when we create a new release. We do this with the help of a GitHub action that is triggered when we create a new release. After the release is created we update the manifest with the help of `wingetcreate` in our GitHub actions pipeline:
 
+{% raw %}
 ```yaml
 publish_msix:
   name: 'Publish Msix'
@@ -59,6 +60,7 @@ publish_msix:
   - name: Update manifest on winget
     run: wingetcreate update --submit --replace --token ${{ secrets.WINGET_TOKEN }} --urls https://github.com/ImageMagick/ImageMagick/releases/download/${{ needs.version.outputs.release }}/ImageMagick.Q16-HDRI.msixbundle --version ${{ needs.version.outputs.version }} ImageMagick.Q16-HDRI
 ```
+{% endraw %}
 
 This action will install `wingetcreate` and then update the manifest with the new release. This is done with the following options:
 - `--submit` Submit the manifest to the Windows Package Manager repository through a pull request.
