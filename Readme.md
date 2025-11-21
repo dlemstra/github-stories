@@ -1,4 +1,5 @@
 2025:
+- [The danger of comments in pull requests](2025/the-danger-of-comments-in-pull-requests)
 - [The magick-wasm npm package now uses Trusted Publisher](2025/magick-wasm-now-uses-trusted-publisher)
 
 2024:
