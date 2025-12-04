@@ -68,6 +68,7 @@ jobs:
 
 This was the initial part of the workflow that triggered on pushes and pull requests to the `main` branch. The permissions were also set to only read the contents and packages because no publishing was done in this workflow. It would only create the package and upload it as an artifact. To add the publishing step I had to make some changes to the workflow and added two new jobs. That started with adding a new job to check if the package should be published:
 
+{% raw %}
 ```yml
 jobs:
   check:
@@ -93,9 +94,11 @@ jobs:
             echo "publish=true"
           fi
 ```
+{% endraw %}
 
 The `check` jobs checks if the current commit is tagged with a version that matches the version in the `package.json` file. If it does it will set the `publish` output to `true`. This will be used in the `publish` job to determine if the package should be published or if a dry-run should be done.
 
+{% raw %}
 ```yml
   publish:
     name: Publish package
@@ -141,6 +144,7 @@ The `check` jobs checks if the current commit is tagged with a version that matc
         name: Run npm publish
         run: npm publish --registry https://registry.npmjs.org/
 ```
+{% endraw %}
 
 In the `publish` job you can see that the `environment` is set to `npmjs` which is the environment we created earlier. This will ensure that the publishing can only be done from the `main` branch. The rest of the job is pretty standard. It sets up Node.js, checks out the code, installs the dependencies, builds the package and finally publishes it to npmjs if the `publish` output from the `check` job is `true`. 
 
