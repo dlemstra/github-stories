@@ -1,0 +1,15 @@
+{
+	"name": "Jekyll GitHub Pages",
+	"image": "mcr.microsoft.com/devcontainers/jekyll:2-bullseye",
+
+	"postCreateCommand": "bundle install && echo 'source /workspaces/github-stories/.devcontainer/.bashrc' >> ~/.bashrc",
+
+	"forwardPorts": [4000],
+
+	"portsAttributes": {
+		"4000": {
+			"label": "Jekyll Server",
+			"onAutoForward": "notify"
+		}
+	}
+}
