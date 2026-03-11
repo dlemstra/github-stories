@@ -1,4 +1,5 @@
 2026:
+- [How I could have compromised several millions of installations of a popular editor extension](2026/how-i-could-have-compromised-several-millions-of-installations-of-a-popular-editor-extension)
 - [ImageMagick was part of the GitHub Secure Open Source Fund](2026/imagemagick-was-part-of-the-github-secure-open-source-fund)
 - [Magick.NET now uses NuGet Trusted Publishing together with Artifact Signing](2026/magick-net-now-uses-nuget-trusted-publishing-together-with-artifact-signing)
 
