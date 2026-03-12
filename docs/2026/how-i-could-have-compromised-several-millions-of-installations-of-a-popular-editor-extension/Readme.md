@@ -1,6 +1,6 @@
 # How I could have compromised several millions of installations of a popular editor extension
 
-I recently learned how I can secure the actions in my GitHub repositories to prevent attackers from compromising my open source projects. While securing the ImageMagick project and my own repositories I wondered if other popular open source projects were also secured. So I decided to check some projects on GitHub to see if they were secured. And I found a popular editor extension that was not secured. That extension has several millions of installations. In this story I will explain how I secured my GitHub actions and how I could have compromised this extension.
+During the GitHub Secure Open Source Fund I learned how I can secure the actions in my GitHub repositories to prevent attackers from compromising my open source projects. While securing the ImageMagick project and my own repositories I wondered if other popular open source projects were also secured. So I decided to check some projects on GitHub to see if they were secured. And I found a popular editor extension that was not secured. That extension has several millions of installations. In this story I will explain how I secured my GitHub actions and how I could have compromised this extension.
 
 ### Limiting the permissions of GitHub actions
 
