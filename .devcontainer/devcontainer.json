@@ -1,6 +1,6 @@
 {
   "image": "mcr.microsoft.com/devcontainers/jekyll:2-bullseye",
-  "postCreateCommand": "bundle install && bundle exec jekyll serve --source docs --incremental --force_polling --livereload --port 4040",
+  "postStartCommand": "bundle install && bundle exec jekyll serve --source docs --incremental --force_polling --livereload --port 4040",
   "forwardPorts": [
     4040
   ],
