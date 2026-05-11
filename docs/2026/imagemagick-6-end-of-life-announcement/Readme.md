@@ -15,7 +15,7 @@ In 2016, we launched ImageMagick 7, a significant redesign focused on performanc
 
 The time has come to bring ImageMagick 6 to a close.
 
-Effective today, ImageMagick 6 will no longer receive bug fixes or general maintenance updates. While new features have not been added to ImageMagick 6 for quite some time, we have continued to provide stability improvements; and that chapter now ends. To ensure a responsible and secure transition period, we will continue to provide security updates for ImageMagick 6 until **April 1, 2029**. That date will mark **25 years of support**, an extraordinary lifespan for a major software version.
+Effective May 1, 2026, ImageMagick 6 will no longer receive bug fixes or general maintenance updates. While new features have not been added to ImageMagick 6 for quite some time, we have continued to provide stability improvements; and that chapter now ends. To ensure a responsible and secure transition period, we will continue to provide security updates for ImageMagick 6 until **April 1, 2029**. That date will mark **25 years of support**, an extraordinary lifespan for a major software version.
 
 After April 1, 2029, ImageMagick 6 will reach its final end‑of‑life and will no longer be supported in any capacity. The Github repository will be archived. It will be read-only and will no longer accept issues or pull requests.
 
