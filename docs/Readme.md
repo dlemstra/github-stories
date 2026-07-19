@@ -1,4 +1,5 @@
 2026:
+- [Dangerous branch names](2026/dangerous-branch-names/)
 - [ImageMagick 6 end-of-life announcement](2026/imagemagick-6-end-of-life-announcement/)
 - [How I could have compromised several millions of installations of a popular editor extension](2026/how-i-could-have-compromised-several-millions-of-installations-of-a-popular-editor-extension/)
 - [ImageMagick was part of the GitHub Secure Open Source Fund](2026/imagemagick-was-part-of-the-github-secure-open-source-fund/)
