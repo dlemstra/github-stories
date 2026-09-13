@@ -1,4 +1,5 @@
 2026:
+- [The ImageMagick website is now hosted by GitHub](2026/the-imagemagick-website-is-now-hosted-by-github/)
 - [Dangerous branch names](2026/dangerous-branch-names/)
 - [ImageMagick 6 end-of-life announcement](2026/imagemagick-6-end-of-life-announcement/)
 - [How I could have compromised several millions of installations of a popular editor extension](2026/how-i-could-have-compromised-several-millions-of-installations-of-a-popular-editor-extension/)
